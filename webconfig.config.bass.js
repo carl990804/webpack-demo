@@ -1,31 +1,24 @@
 const path = require('path');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const base = require('./webconfig.config.bass.js')
 
 module.exports = {
-  mode: 'production',
-  ...base,
+  entry: './src/index.js',
+  output: {
+    filename: '[name].[contenthash].js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true,
+  },
   plugins: [
-    ...base.plugins,
-    new MiniCssExtractPlugin({
-      filename: "[name].[hash].css",
-      chunkFilename: "[id].css",
-    })
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'carl',
+      template: 'src/assets/index.html'
+    }),
+
   ],
   module: {
-    // ...base.module.rules,
-
-    // rules: [
-    //   {
-    //     test: /\.css$/i,
-    //     // use: ["style-loader", "css-loader"],
-    //     use: [MiniCssExtractPlugin.loader,
-    //       "css-loader"],
-    //   },
-    // ],
-        rules: [
+    rules: [
       {
         test: /\.s[ac]ss$/i,
         use: [
